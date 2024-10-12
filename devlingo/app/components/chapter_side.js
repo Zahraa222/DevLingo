@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import { chapters } from "./chapters"
+import Roadmap_side from './roadmap_side';
 
 function Chapter_side() {
     const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
@@ -20,17 +21,24 @@ function Chapter_side() {
     const currentChapter = chapters[currentChapterIndex];
 
     return (
-        <div className='w-1/2 float-left ml-8'>
-            <h1 className='font-bold text-3xl'>{currentChapter.title}</h1>
-            <div className='bg-white text-black p-4 overflow-y-auto max-h-lvh mb-10 rounded-md'>
-                {currentChapter.sections.map((section, index) => (
-                    <div key={index}>
-                        <h4 className='font-bold'>{section.title}</h4>
-                        <p>{section.content}</p>
-                    </div>
-                ))}
+        <div className="flex flex-col ml-8">
+      {chapters.map((chapter, chapterIndex) => (
+        <div key={chapterIndex} className="flex flex-row mb-10">
+          <div className="w-1/2 mr-8">
+            <h1 className="font-bold text-3xl mb-4">{chapter.title}</h1>
+            <div className="bg-white text-black p-4 overflow-y-auto max-h-lvh mb-10 rounded-md shadow-md">
+              {chapter.sections.map((section, sectionIndex) => (
+                <div key={sectionIndex} className="mb-4">
+                  <h4 className="font-bold mb-2">{section.title}</h4>
+                  <p>{section.content}</p>
+                </div>
+              ))}
             </div>
+          </div>
+          <Roadmap_side />
         </div>
+      ))}
+    </div>
     );
 }
 
