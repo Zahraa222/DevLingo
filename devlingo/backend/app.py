@@ -44,8 +44,9 @@ def login_user():
     if request.method == 'GET':
         return send_from_directory(os.path.join('app', 'signup'), 'login.js')
     elif request.method == 'POST':
-        email = request.form.get("email")
-        password = request.form.get("password")
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
         if not email or not password:
             return jsonify({"error": "Missing data"}), 400
         try:
