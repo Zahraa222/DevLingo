@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, send_from_directory
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import dbase as dbase
 import cred as cred
 import os
@@ -13,7 +13,7 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 app = Flask(__name__)
 app.secret_key = 'devlingo123456789'
-CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 
 @app.route('/')
