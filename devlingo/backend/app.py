@@ -3,10 +3,18 @@ from flask_cors import CORS
 import dbase as dbase
 import cred as cred
 import os
+import google.generativeai as genai
+import uagents
+from uagents import Agent
+
+
+genai.configure(api_key="AIzaSyBDeJ7XoBPRcc_tqVIZzhDZqWCp0VK0lak")
+model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 app = Flask(__name__)
 app.secret_key = 'devlingo123456789'
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 
 @app.route('/')
 def index():
@@ -16,10 +24,10 @@ def index():
         print(e)
         return jsonify({"message": f"Error: {e}"}), 404
 
+
 @app.route('/home')
 def home():
     return jsonify({"message": "Handled by React"}), 200
-
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -67,6 +75,40 @@ def login_user():
         except Exception as e:
             print(f"Error during login: {e}")
             return jsonify({"error": str(e)}), 500
+
+
+class CodingBotAgent(Agent):
+    async def respond_to_question(self, question: str):
+        if not question:
+            return {"error": "No question provided"}
+
+        # Call Google Gemini API to generate response
+        response = model.generate_content(question)
+        answer = response.text
+        return {"answer": answer}
+
+agent = CodingBotAgent(name="coding_bot")
+
+
+@app.route('/gethelp', methods=['GET', 'POST'])
+def ask_question():
+    if request.method == 'GET':
+        print("Tried to go to page get")
+        return send_from_directory(os.path.join('app', 'signup'), 'gethelp.js')
+    elif request.method == 'POST':
+        print("Tried to go to page post")
+        question = request.json.get("question")
+        if not question:
+            return jsonify({"answer": "Please provide a question."}), 400
+        
+        result = agent.respond_to_question(question)
+
+        if "answer" in result:
+            # Render the form with the AI's answer
+            return jsonify({"answer": result["answer"]})
+        else:
+            return jsonify({"answer": "Something went wrong, please try again."}), 500
+
 
 
 if __name__ == '__main__':
