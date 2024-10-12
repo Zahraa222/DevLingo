@@ -57,15 +57,23 @@ def check_user(email):
     return False
 
 def check_credentials(email, password):
+    print(f"Checking credentials for: {email}")  # Log the email being checked
     c.execute("SELECT password FROM UserData WHERE email = ?", (email,))
     result = c.fetchone()
+    
     if result is None:
-        return "Email not found"
+        print("User not found")  # Log when user is not found
+        return "User not found"
+    
     stored_password = result[0]
+    print(f"Stored password: {stored_password}, Provided password: {password}")  # Log both passwords
+    
     if stored_password == password:
+        print("Passwords match!")  # Log success if passwords match
         return True
 
-    return "Incorrect password"  # Email exists, but the password does not match
+    print("Passwords do not match!")  # Log failure if passwords don't match
+    return "Incorrect password"
 
 
 def save_xp(xp, email):
