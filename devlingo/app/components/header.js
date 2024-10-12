@@ -1,17 +1,18 @@
 import React from "react";
+import Image from "next/image";
+import logo from "../images/devlingologo.png";
 
 function Header() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: "10px",
-        left: "10px",
-        fontSize: "24px",
-        fontWeight: "bold",
-      }}
-    >
-      Dev Lingo
+    <div className="relative flex justify-start items-center p-4 w-full">
+      <Image
+        src={logo}
+        alt="Dev Lingo Logo"
+        className="object-cover"
+        width={50}
+        height={50}
+      />
+      <div className="ml-2 text-2xl font-bold text-white">Dev Lingo</div>
     </div>
   );
 }
