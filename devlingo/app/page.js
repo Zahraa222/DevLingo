@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './sign-up/login';
 import Register from './sign-up/register';
 
-
 const App = () => {
  return (
    <Router>
