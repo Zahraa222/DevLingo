@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, send_from_directory
 from flask_cors import CORS
-import dbase
-import cred
+import devlingo.backend.dbase as dbase
+import devlingo.backend.cred as cred
 import os
 
 app = Flask(__name__)
