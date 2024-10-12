@@ -6,3 +6,12 @@ or
 https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en
 
 
+Check the version of your Chrome browser. Probably it is one with a bug. Here are bug reports posted on May about this feature not working: https://bugs.chromium.org/p/chromium/issues/detail?id=857032
+
+I have faced the same issue few weeks ago and here is how I managed to get disabled CORS: Firstly download the Chromium browser or Chrome canary browser, which are actually very good for developers (I user chromium, but it is up to you): https://www.google.com/intl/en/chrome/canary/ or https://download-chromium.appspot.com/
+
+Then:
+
+Install browser
+If you run browser - close it and make sure that there is no more running instances
+Then run it with such command: open -a ChromiumOrCanaryPathHere --args --disable-web-security --user-data-dir"
