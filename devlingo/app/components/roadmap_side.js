@@ -38,7 +38,7 @@ function Roadmap_side() {
   };
 
   const closeQuiz = () => {
-    setIsModalOpen(false);
+    setIsQuizOpen(false);
   }
 
   return (
