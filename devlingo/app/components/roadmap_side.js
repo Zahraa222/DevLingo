@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ideas from "../images/ideas.png";
 import correct from "../images/correct.png";
+import QuizCard from "./quiz";
+
 const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
   return (
     <div
@@ -26,12 +28,18 @@ const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
 function Roadmap_side() {
   const imageUrl = ideas;
   const [selectedCircles, setSelectedCircles] = useState([false, false, false]);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
 
   const handleCircleClick = (index) => {
     const newSelection = [...selectedCircles];
     newSelection[index] = !newSelection[index];
     setSelectedCircles(newSelection);
+    setIsQuizOpen(true);
   };
+
+  const closeQuiz = () => {
+    setIsModalOpen(false);
+  }
 
   return (
     <div className="w-[500px] h-[500px] mt-6">
@@ -50,6 +58,7 @@ function Roadmap_side() {
           </React.Fragment>
         ))}
       </div>
+      {isQuizOpen && <QuizCard onClose={closeQuiz} />}
     </div>
   );
 }

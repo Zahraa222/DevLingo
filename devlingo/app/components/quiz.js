@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { quizQuestions } from './quizData';
 
-function QuizCard() {
+function QuizCard({ onClose}) {
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
@@ -26,6 +26,7 @@ function QuizCard() {
     }
     if (currentQuestionIndex === quizQuestions.length - 1) {
       closeModal();
+      onClose();
     }
   }
   
