@@ -13,8 +13,9 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
 app = Flask(__name__)
 app.secret_key = 'devlingo123456789'
-CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
-
+# CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
+cors=CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def index():
@@ -82,7 +83,6 @@ class CodingBotAgent(Agent):
         if not question:
             return {"error": "No question provided"}
 
-        # Call Google Gemini API to generate response
         response = model.generate_content(question)
         answer = response.text
         return {"answer": answer}
@@ -104,7 +104,6 @@ def ask_question():
         result = agent.respond_to_question(question)
 
         if "answer" in result:
-            # Render the form with the AI's answer
             return jsonify({"answer": result["answer"]})
         else:
             return jsonify({"answer": "Something went wrong, please try again."}), 500
