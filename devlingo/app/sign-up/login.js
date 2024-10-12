@@ -4,14 +4,14 @@ import { useState } from 'react';
 
 
 export default function Login() {
- const [email, setEmail] = useState('');
- const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
 
- const handleSubmit = (e) => {
-   e.preventDefault();
-   const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting login request:", { email, password });  // Log the email and password
     try {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -22,7 +22,7 @@ export default function Login() {
       });
   
       const data = await response.json();
-  
+      console.log("Response received:", data);
       if (response.ok) {
         window.location.href = '/home';  // Redirect on successful login
       } else {
@@ -32,10 +32,6 @@ export default function Login() {
       setErrorMessage('An error occurred while logging in');
     }
   };
-  
-   console.log({ email, password });
- };
-
 
  return (
    <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -76,11 +72,11 @@ export default function Login() {
        >
          Login
        </button>
+       {errorMessage && <p className="text-red-500 mt-4 text-center">{errorMessage}</p>}
      </form>
    </div>
  );
 }
-
 
 
 

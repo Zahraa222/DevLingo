@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, send_from_directory
 from flask_cors import CORS
-import devlingo.backend.dbase as dbase
-import devlingo.backend.cred as cred
+import dbase as dbase
+import cred as cred
 import os
 
 app = Flask(__name__)
@@ -44,21 +44,26 @@ def login_user():
     if request.method == 'GET':
         return send_from_directory(os.path.join('app', 'signup'), 'login.js')
     elif request.method == 'POST':
+        print("Received post request")
         data = request.get_json()
+        print(f"Data received: {data}")
         email = data.get('email')
         password = data.get('password')
+        print(f"Received login request: {email}, {password}")  # Log the request
         if not email or not password:
+            print("Missing email or password")
             return jsonify({"error": "Missing data"}), 400
         try:
             result = dbase.check_credentials(email, password)
+            print(f"Login result: {result}")
             if result == "Invalid password":
                 return jsonify({"error": "Invalid password. Please try again."}), 400
             elif result == "User not found":
                 return jsonify({"error": "User not found. Please register."}), 400
             elif result:
-                flash("Login successful!")
-                return redirect(url_for('home'))
+                return jsonify({"message": "Login successful"}), 200
         except Exception as e:
+            print(f"Error during login: {e}")
             return jsonify({"error": str(e)}), 500
 
 
