@@ -17,7 +17,7 @@ function Chapter_side() {
         }
     };
 
-    const currentChapter = chapters[currentChapterIndex] || { title: 'Unknown', sections: [] };
+    const currentChapter = chapters[currentChapterIndex];
 
     return (
         <div className='w-1/2 float-left ml-8'>
