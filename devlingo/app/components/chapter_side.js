@@ -12,29 +12,31 @@ function Chapter_side() {
     };
 
     const handlePrevChapter = () => {
-        if (currentChapterIndex > chapters.length - 1) {
+        if (currentChapterIndex > 0) {
             setCurrentChapterIndex(currentChapterIndex - 1);
         }
     };
-    
+
     const currentChapter = chapters[currentChapterIndex] || { title: 'Unknown', sections: [] };
 
     return (
-        <div className='w-1/2 float-left'>
-            <h1 className='shadow-custom'>{currentChapter.title}</h1>
-            <div className='bg-white text-black p-4 overflow-y-auto max-h-96'>
+        <div className='w-1/2 float-left ml-8'>
+            <h1 className='font-bold text-3xl'>{currentChapter.title}</h1>
+            <div className='bg-white text-black p-4 overflow-y-auto max-h-lvh mb-10'>
                 {currentChapter.sections.map((section, index) => (
                     <div key={index}>
-                        <h4>{section.title}</h4>
+                        <h4 className='font-bold'>{section.title}</h4>
                         <p>{section.content}</p>
                     </div>
                 ))}
-                <button onClick={handleNextChapter} disabled={currentChapterIndex >= chapters.length - 1}>
-                    Back
-                </button>
-                <button onClick={handlePrevChapter} disabled={currentChapterIndex >= chapters.length - 1}>
-                    Next
-                </button>
+                <div className="flex justify-between mt-4">
+                    <button className="font-bold rounded-lg text-lg w-36 h-10 bg-[#5f7dae] text-[#ffffff]" onClick={handlePrevChapter} disabled={currentChapterIndex <= 0}>
+                        Back
+                    </button>
+                    <button className="font-bold rounded-lg text-lg w-36 h-10 bg-[#5f7dae] text-[#ffffff]" onClick={handleNextChapter} disabled={currentChapterIndex >= chapters.length - 1}>
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     );
