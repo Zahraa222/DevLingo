@@ -17,7 +17,7 @@ function Chapter_side() {
         }
     };
 
-    const currentChapter = chapters[currentChapterIndex] || { title: 'Unknown', sections: [] };
+    const currentChapter = chapters[currentChapterIndex];
 
     return (
         <div className='w-1/2 float-left ml-8'>
@@ -29,14 +29,6 @@ function Chapter_side() {
                         <p>{section.content}</p>
                     </div>
                 ))}
-                <div className="flex justify-between mt-4">
-                    <button className="font-bold rounded-lg text-lg w-36 h-10 bg-[#5f7dae] text-[#ffffff]" onClick={handlePrevChapter} disabled={currentChapterIndex <= 0}>
-                        Back
-                    </button>
-                    <button className="font-bold rounded-lg text-lg w-36 h-10 bg-[#5f7dae] text-[#ffffff]" onClick={handleNextChapter} disabled={currentChapterIndex >= chapters.length - 1}>
-                        Next
-                    </button>
-                </div>
             </div>
         </div>
     );
