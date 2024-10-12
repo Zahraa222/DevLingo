@@ -18,7 +18,8 @@ def index():
 
 @app.route('/home')
 def home():
-    return send_from_directory(os.path.join('app'), 'page.js')
+    return jsonify({"message": "Handled by React"}), 200
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -26,8 +27,9 @@ def register_user():
     if request.method == 'GET':
         return send_from_directory(os.path.join('app', 'signup'), 'register.js')
     elif request.method == 'POST':
-        email = request.form.get("email")
-        password = request.form.get("password")
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
         if not email or not password:
             return jsonify({"error": "Missing data"}), 400
         try:
