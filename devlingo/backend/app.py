@@ -9,7 +9,7 @@ from uagents import Agent
 
 
 genai.configure(api_key="AIzaSyBDeJ7XoBPRcc_tqVIZzhDZqWCp0VK0lak")
-model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+model = genai.GenerativeModel(model_name="gemini-1.5-flash", system_instruction="You are an expert programmer and coder. Your name is DevLingo AI.")
 
 app = Flask(__name__)
 app.secret_key = 'devlingo123456789'
@@ -83,7 +83,9 @@ class CodingBotAgent(Agent):
         if not question:
             return {"error": "No question provided"}
 
-        response = model.generate_content(question)
+        response = model.generate_content(question, 
+                                          candidate_couunt=1,
+                                          temperature=1.5)
         answer = response.text
         return {"answer": answer}
 
