@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-500">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#ef4035]">
       <div className="flex p-6">
         <Image
           src={logo}
@@ -51,7 +51,7 @@ export default function Login() {
           width={100}
           height={100}
         />
-        <h1 className="mt-6 text-6xl">DevLingo</h1>
+        <h1 className="mt-6 text-6xl text-[#262261]">DevLingo</h1>
       </div>
       <form
         onSubmit={handleSubmit}
@@ -71,7 +71,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-[#faaf3f]"
           />
         </div>
         <div className="mb-6">
@@ -87,18 +87,18 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-500"
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-[#faaf3f]"
           />
         </div>
         <Link
           to="/register"
-          className="text-blue-500 hover:underline mb-4 block text-center"
+          className="text-[#faaf3f] hover:underline mb-4 block text-center"
         >
           Don't have an account? Register here.
         </Link>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-[#faaf3f] text-white py-2 rounded-md hover:bg-[#e09c38] transition duration-200"
         >
           Login
         </button>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center min-h-screen pb-4 pl-4 pr-4 bg-blue-500">
+    <div className="flex flex-col items-center min-h-screen pb-4 pl-4 pr-4 bg-[#ef4035]">
       <Header />
       <h2 className="text-2xl font-bold mb-4 text-white">
         Pick a Language To Study:
@@ -23,7 +23,7 @@ const Home = () => {
       {/* Link to chat with AI bot */}
       <Link
         to="/gethelp" // Use 'to' instead of 'href'
-        className="absolute top-4 right-4 text-sm text-white bg-black py-2 px-4 rounded hover:bg-gray-800 transition duration-300"
+        className="absolute top-4 right-4 text-sm text-white bg-[#262261] py-2 px-4 rounded hover:bg-[#1d1a4e] transition duration-300"
       >
         Need help? Chat with our AI bot
       </Link>
