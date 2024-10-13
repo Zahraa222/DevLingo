@@ -4,7 +4,7 @@ import Header from "../components/header";
 
 function page() {
   return (
-    <div className="p-8 bg-blue-600 min-h-screen">
+    <div className="pr-8 pl-8 bg-blue-600 min-h-screen">
       <Header></Header>
       <Chapter_side />
     </div>

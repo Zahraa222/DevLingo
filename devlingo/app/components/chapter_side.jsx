@@ -66,6 +66,7 @@ function Chapter_side() {
             <Roadmap_side
               chapterIndex={chapterIndex}
               unlockNextChapter={unlockNextChapter}
+              unlockedChapters={unlockedChapters}
             />
           </div>
         </div>
