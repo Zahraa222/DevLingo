@@ -4,7 +4,7 @@ import logo from "../images/devlingologo.png";
 
 function Header() {
   return (
-    <div className="relative flex justify-start items-center p-4 w-full">
+    <div className="relative flex justify-start items-center pr-4 pl-4 w-full">
       <Image
         src={logo}
         alt="Dev Lingo Logo"
@@ -12,7 +12,7 @@ function Header() {
         width={50}
         height={50}
       />
-      <div className="ml-2 text-2xl font-bold text-white">Dev Lingo</div>
+      <div className="ml-2 text-2xl font-bold text-white">DevLingo</div>
     </div>
   );
 }
