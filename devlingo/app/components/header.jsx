@@ -12,7 +12,7 @@ function Header() {
         width={50}
         height={50}
       />
-      <div className="ml-2 text-2xl font-bold text-white">Dev Lingo</div>
+      <div className="ml-2 text-2xl font-bold text-white">DevLingo</div>
     </div>
   );
 }

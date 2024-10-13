@@ -1,7 +1,7 @@
 import languages from "@/languages";
 import LanguageBlock from "./components/LanguageBlock";
 import Header from "./components/header";
-import { Link } from 'react-router-dom';  // Import Link from react-router-dom
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Home = () => {
   return (
@@ -14,13 +14,13 @@ const Home = () => {
             key={index}
             imageUrl={language.imageUrl}
             text={language.text}
-            route={`/languages/${language.text.toLowerCase()}`}
+            route={`/${language.text.toLowerCase()}`}
           />
         ))}
       </div>
       {/* Link to chat with AI bot */}
       <Link
-        to="/gethelp"  // Use 'to' instead of 'href'
+        to="/gethelp" // Use 'to' instead of 'href'
         className="absolute top-4 right-4 text-sm text-white bg-black py-2 px-4 rounded hover:bg-gray-800 transition duration-300"
       >
         Need help? Chat with our AI bot
