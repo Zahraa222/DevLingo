@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ideas from "../images/ideas.png";
 import correct from "../images/correct.png";
+import LockImage from "../images/lock.png";
 import QuizCard from "./quiz";
 
-const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
+const QuizCircle = ({ imageUrl, isSelected, isLocked, onClick }) => {
   return (
     <div
       className={`flex items-center justify-center w-40 h-40 rounded-full cursor-pointer ${
@@ -14,7 +15,7 @@ const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
       onClick={onClick}
     >
       <Image
-        src={isSelected ? correct : imageUrl}
+        src={isLocked ? LockImage : isSelected ? correct : imageUrl}
         alt="Quiz Logo"
         className="object-cover opacity-100"
         width={75}
@@ -24,7 +25,7 @@ const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
   );
 };
 
-function Roadmap_side({ chapterIndex, unlockNextChapter }) {
+function Roadmap_side({ chapterIndex, unlockNextChapter, unlockedChapters }) {
   const imageUrl = ideas;
   const [selectedCircles, setSelectedCircles] = useState([false, false, false]);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
@@ -46,6 +47,7 @@ function Roadmap_side({ chapterIndex, unlockNextChapter }) {
   const closeQuiz = () => {
     setIsQuizOpen(false);
   };
+  const isLocked = unlockedChapters && !unlockedChapters[chapterIndex] ? true : false;
 
   return (
     <div className="w-[500px] h-[500px] mt-6">
@@ -55,6 +57,7 @@ function Roadmap_side({ chapterIndex, unlockNextChapter }) {
           <React.Fragment key={index}>
             <QuizCircle
               imageUrl={imageUrl}
+              isLocked={isLocked}
               isSelected={isSelected}
               onClick={() => handleCircleClick(index)}
             />
