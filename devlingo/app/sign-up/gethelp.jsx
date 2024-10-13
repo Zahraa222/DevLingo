@@ -1,50 +1,51 @@
-'use client';
-import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+"use client";
+import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 export default function GetHelp() {
-  const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!question.trim()) {
-      setError('Please provide a valid question.');
+      setError("Please provide a valid question.");
       return;
     }
 
     setLoading(true);
-    setError('');
-    setAnswer('');
+    setError("");
+    setAnswer("");
 
     try {
       // Use Flask's API endpoint (running on port 5000)
-      const response = await fetch('http://localhost:5000/gethelp', {  // Correct Flask endpoint
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/gethelp", {
+        // Correct Flask endpoint
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ question }),
       });
 
       if (!response.ok) {
-        throw new Error('Something went wrong with the server.');
+        throw new Error("Something went wrong with the server.");
       }
 
       const data = await response.json();
       setAnswer(data.answer);
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 p-6">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full">
         <h1 className="text-3xl font-bold text-center text-blue-500 mb-4">
           Ask a Question
@@ -64,7 +65,7 @@ export default function GetHelp() {
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200"
             disabled={loading}
           >
-            {loading ? 'Submitting...' : 'Get Help'}
+            {loading ? "Submitting..." : "Get Help"}
           </button>
         </form>
 
