@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import logo from "../images/devlingologo.png";
+import Link from "next/link";
 
 function Header() {
   return (
@@ -13,6 +14,13 @@ function Header() {
         height={50}
       />
       <div className="ml-2 text-2xl font-bold text-white">DevLingo</div>
+      {/* Link to chat with AI bot */}
+      <Link
+        href="/gethelp" // Use 'to' instead of 'href'
+        className="absolute top-4 right-4 text-sm text-white bg-black py-2 px-4 rounded hover:bg-gray-800 transition duration-300"
+      >
+        Need help? Chat with our AI bot
+      </Link>
     </div>
   );
 }
