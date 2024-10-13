@@ -3,15 +3,11 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './sign-up/login';
 import Register from './sign-up/register';
+import Chapter_side from './components/chapter_side';
 
 const App = () => {
  return (
-   <Router>
-     <Routes>
-       <Route path="/" element={<Login />} />
-       <Route path="/register" element={<Register />} />
-     </Routes>
-   </Router>
+   <Chapter_side />
  );
 };
 
