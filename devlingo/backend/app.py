@@ -64,15 +64,12 @@ def login_user():
         email = data.get('email')
         password = data.get('password')
         print(f"Received login request: {email}, {password}")  # Log the request
-
         if not email or not password:
             print("Missing email or password")
             return jsonify({"error": "Missing data"}), 400  # Bad request
-
         try:
             result = dbase.check_credentials(email, password)
             print(f"Login result: {result}")
-
             if result == "Incorrect password":
                 return jsonify({"error": "Incorrect password. Please try again."}), 401  # Unauthorized
             elif result == "User not found":
@@ -137,8 +134,9 @@ def get_user_details():
     if not email:
         return jsonify({"error": "User is not logged in"}), 403
 
-    xp = fetch_xp(email)  # Assuming fetch_xp is a function that retrieves the user's XP
-    return jsonify({"XP": xp}), 200
+    xp = fetch_xp(email)  
+    level = fetch_level(email)
+    return jsonify({"XP": xp, "Level": level}), 200
 
 
 if __name__ == '__main__':
