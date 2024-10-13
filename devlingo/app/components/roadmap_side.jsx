@@ -47,10 +47,11 @@ function Roadmap_side({ chapterIndex, unlockNextChapter, unlockedChapters }) {
   const closeQuiz = () => {
     setIsQuizOpen(false);
   };
-  const isLocked = unlockedChapters && !unlockedChapters[chapterIndex] ? true : false;
+  const isLocked =
+    unlockedChapters && !unlockedChapters[chapterIndex] ? true : false;
 
   return (
-    <div className="w-[500px] h-[500px] mt-6">
+    <div className="mt-6">
       <div className="flex flex-col items-center relative">
         <div className="absolute left-1/2 -translate-x-1/2 w-px h-24 bg-gray-300"></div>
         {selectedCircles.map((isSelected, index) => (
