@@ -9,12 +9,15 @@ import google.generativeai as genai
 import uagents
 from uagents import Agent
 import asyncio
+from dotenv import load_dotenv
 
-genai.configure(api_key="AIzaSyBDeJ7XoBPRcc_tqVIZzhDZqWCp0VK0lak")
+load_dotenv()
+
+genai.configure(api_key=os.getenv('GENAI_API_KEY'))
 model = genai.GenerativeModel(model_name="gemini-1.5-flash", system_instruction="You are an expert programmer and coder. Your name is DevLingo AI.")
 
 app = Flask(__name__)
-app.secret_key = 'devlingo123456789'
+app.secret_key = os.getenv('SECRET_KEY')
 cors=CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
