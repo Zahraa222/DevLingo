@@ -5,6 +5,7 @@ import ideas from "../images/ideas.png";
 import correct from "../images/correct.png";
 import LockImage from "../images/lock.png";
 import QuizCard from "./quiz";
+import { quizQuestions } from "./quizData";
 
 const QuizCircle = ({ imageUrl, isSelected, isLocked, onClick }) => {
   return (
@@ -28,27 +29,41 @@ const QuizCircle = ({ imageUrl, isSelected, isLocked, onClick }) => {
 function Roadmap_side({ chapterIndex, unlockNextChapter, unlockedChapters }) {
   const imageUrl = ideas;
   const [selectedCircles, setSelectedCircles] = useState([false, false, false]);
-  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);  // Handles quiz modal state
+  const [currentQuiz, setCurrentQuiz] = useState(null); // State to store the current quiz
+  const [isChapterUnlocked, setIsChapterUnlocked] = useState(false);
 
   useEffect(() => {
     // Check if all quizzes are completed for this chapter
-    if (selectedCircles.every((circle) => circle)) {
+    if (selectedCircles.every((circle) => circle) && !isChapterUnlocked) {
       unlockNextChapter(chapterIndex); // Unlock the next chapter
+      setIsChapterUnlocked(true);
     }
-  }, [selectedCircles, unlockNextChapter, chapterIndex]);
+  }, [selectedCircles, unlockNextChapter, chapterIndex, isChapterUnlocked]);
 
   const handleCircleClick = (index) => {
     const newSelection = [...selectedCircles];
     newSelection[index] = !newSelection[index];
     setSelectedCircles(newSelection);
-    setIsQuizOpen(true);
+
+    // Set the appropriate quiz data based on the selected circle
+    const selectedChapter = quizQuestions[`chapter${chapterIndex + 1}`];  // Access the correct chapter
+    const selectedQuiz = selectedChapter[0][`quiz${index + 1}`];  // Access the correct quiz
+
+    if (selectedQuiz) {
+      setCurrentQuiz(selectedQuiz);  // Set the selected quiz data
+      setIsQuizOpen(true);  // Open the quiz modal
+    } else {
+      console.error("Selected quiz not found.");
+    }
   };
 
   const closeQuiz = () => {
-    setIsQuizOpen(false);
+    setIsQuizOpen(false);  // Close the quiz modal
+    setCurrentQuiz(null);  // Clear quiz data after closing
   };
-  const isLocked =
-    unlockedChapters && !unlockedChapters[chapterIndex] ? true : false;
+
+  const isLocked = unlockedChapters && !unlockedChapters[chapterIndex];
 
   return (
     <div className="mt-6">
@@ -68,7 +83,11 @@ function Roadmap_side({ chapterIndex, unlockNextChapter, unlockedChapters }) {
           </React.Fragment>
         ))}
       </div>
-      {isQuizOpen && <QuizCard onClose={closeQuiz} />}
+
+      {/* Only render QuizCard when a quiz is selected and the modal is open */}
+      {isQuizOpen && currentQuiz && (
+        <QuizCard quizData={currentQuiz} onClose={closeQuiz} />
+      )}
     </div>
   );
 }
