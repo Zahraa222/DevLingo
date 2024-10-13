@@ -33,10 +33,6 @@ def index():
 
 @app.route('/home')
 def home():
-    email = session.get['user_email']
-    print(email)
-    xp = fetch_xp(email)
-    print(xp)
     return jsonify({"message": "Handled by React"}), 200
 
 
