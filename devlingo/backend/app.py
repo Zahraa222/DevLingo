@@ -30,6 +30,10 @@ def index():
 
 @app.route('/home')
 def home():
+    email = session.get['user_email']
+    print(email)
+    xp = fetch_xp(email)
+    print(xp)
     return jsonify({"message": "Handled by React"}), 200
 
 
@@ -47,7 +51,8 @@ def register_user():
             if dbase.check_user(email):
                 return jsonify({"error": "User already exists. Please log in."}), 400
             dbase.create_user(email, password)
-            session['user_email'] = email
+            session['user_email'] = email    
+            session.permanent = True
             return redirect(url_for('home'))
         except Exception as e:
             return jsonify({"error": str(e)}), 500
@@ -75,6 +80,13 @@ def login_user():
             elif result == "User not found":
                 return jsonify({"error": "User not found. Please register."}), 400
             elif result:
+                session['user_email'] = email
+                session.permanent = True
+                xp = fetch_xp(email)
+                print(xp)
+                level = fetch_level(email)
+                print(level)
+                print(f"User session: {session.get('user_email')} ... {session}")
                 return jsonify({"message": "Login successful"}), 200
         except Exception as e:
             print(f"Error during login: {e}")
@@ -112,6 +124,10 @@ def ask_question():
 
 @app.route('/python', methods=['GET', 'POST'])
 def start_python():
+    email = session.get['user_email']
+    print(email)
+    xp = fetch_xp(email)
+    print(xp)
     return jsonify({"message": "Handled by React"}), 200
     # email = session.get('user_email')
     # if not email:
