@@ -113,7 +113,7 @@ function QuizCard({ onClose }) {
                    onClick={checkQuestion}
                    className={`text-white px-4 py-2 rounded mt-4 ${
                      selectedAnswer ? "bg-red-500 hover:bg-red-600" : "bg-gray-300 cursor-not-allowed"
-                   }`}
+                   } ${isAnswerCorrect ? "hidden" : ""}`}
                    disabled={!selectedAnswer} // Disable button until an answer is selected
                  >
                    Check Answer
