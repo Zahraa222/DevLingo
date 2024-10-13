@@ -115,7 +115,7 @@ def ask_question():
             return jsonify({"answer": "Something went wrong, please try again."}), 500
 
 
-@app.route('/languages/python', methods=['GET', 'POST'])
+@app.route('/python', methods=['GET', 'POST'])
 def start_python():
     return jsonify({"message": "Handled by React"}), 200
     # email = session.get('user_email')
@@ -138,7 +138,7 @@ def get_user_details():
         return jsonify({"error": "User is not logged in"}), 403
 
     xp = fetch_xp(email)  # Assuming fetch_xp is a function that retrieves the user's XP
-    return jsonify({"email": email, "xp": xp}), 200
+    return jsonify({"XP": xp}), 200
 
 
 if __name__ == '__main__':
