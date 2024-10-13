@@ -6,7 +6,7 @@ import os
 import google.generativeai as genai
 import uagents
 from uagents import Agent
-
+import asyncio
 
 genai.configure(api_key="AIzaSyBDeJ7XoBPRcc_tqVIZzhDZqWCp0VK0lak")
 model = genai.GenerativeModel(model_name="gemini-1.5-flash", system_instruction="You are an expert programmer and coder. Your name is DevLingo AI.")
@@ -83,9 +83,7 @@ class CodingBotAgent(Agent):
         if not question:
             return {"error": "No question provided"}
 
-        response = model.generate_content(question, 
-                                          candidate_couunt=1,
-                                          temperature=1.5)
+        response = model.generate_content(question)
         answer = response.text
         return {"answer": answer}
 
@@ -103,7 +101,7 @@ def ask_question():
         if not question:
             return jsonify({"answer": "Please provide a question."}), 400
         
-        result = agent.respond_to_question(question)
+        result = asyncio.run(agent.respond_to_question(question))
 
         if "answer" in result:
             return jsonify({"answer": result["answer"]})
