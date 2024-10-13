@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ideas from "../images/ideas.png";
 import correct from "../images/correct.png";
@@ -25,10 +24,17 @@ const QuizCircle = ({ imageUrl, isSelected, onClick }) => {
   );
 };
 
-function Roadmap_side() {
+function Roadmap_side({ chapterIndex, unlockNextChapter }) {
   const imageUrl = ideas;
   const [selectedCircles, setSelectedCircles] = useState([false, false, false]);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
+
+  useEffect(() => {
+    // Check if all quizzes are completed for this chapter
+    if (selectedCircles.every((circle) => circle)) {
+      unlockNextChapter(chapterIndex); // Unlock the next chapter
+    }
+  }, [selectedCircles, unlockNextChapter, chapterIndex]);
 
   const handleCircleClick = (index) => {
     const newSelection = [...selectedCircles];
@@ -39,7 +45,7 @@ function Roadmap_side() {
 
   const closeQuiz = () => {
     setIsQuizOpen(false);
-  }
+  };
 
   return (
     <div className="w-[500px] h-[500px] mt-6">

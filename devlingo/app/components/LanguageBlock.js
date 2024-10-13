@@ -4,9 +4,7 @@ import Link from "next/link";
 const LanguageBlock = ({ imageUrl, text, route }) => {
   return (
     <Link href={route}>
-      {" "}
-      <div className="flex flex-col items-center justify-center w-48 h-48 rounded-lg shadow-md overflow-hidden bg-white cursor-pointer">
-        {" "}
+      <div className="flex flex-col items-center justify-center w-48 h-48 rounded-lg shadow-md overflow-hidden bg-white cursor-pointer transition-transform duration-300 transform hover:scale-105">
         <div className="w-full h-full flex items-center justify-center relative">
           <Image
             src={imageUrl}

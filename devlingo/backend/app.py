@@ -53,10 +53,10 @@ def register_user():
             return jsonify({"error": str(e)}), 500
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login_user():
     if request.method == 'GET':
-        return send_from_directory(os.path.join('app', 'sign-up'), 'login.js')
+        return send_from_directory(os.path.join('app', 'signup'), 'login.js')
     elif request.method == 'POST':
         print("Received post request")
         data = request.get_json()
@@ -64,22 +64,24 @@ def login_user():
         email = data.get('email')
         password = data.get('password')
         print(f"Received login request: {email}, {password}")  # Log the request
+
         if not email or not password:
             print("Missing email or password")
-            return jsonify({"error": "Missing data"}), 400
+            return jsonify({"error": "Missing data"}), 400  # Bad request
+
         try:
             result = dbase.check_credentials(email, password)
             print(f"Login result: {result}")
-            if result == "Invalid password":
-                return jsonify({"error": "Invalid password. Please try again."}), 400
+
+            if result == "Incorrect password":
+                return jsonify({"error": "Incorrect password. Please try again."}), 401  # Unauthorized
             elif result == "User not found":
                 return jsonify({"error": "User not found. Please register."}), 400
             elif result:
-                session['user_email'] = email
                 return jsonify({"message": "Login successful"}), 200
         except Exception as e:
             print(f"Error during login: {e}")
-            return jsonify({"error": str(e)}), 500
+            return jsonify({"error": str(e)}), 500 
 
 
 class CodingBotAgent(Agent):

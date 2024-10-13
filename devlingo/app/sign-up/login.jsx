@@ -14,28 +14,34 @@ export default function Login() {
 
 
  const handleSubmit = async (e) => {
-   e.preventDefault();
-   console.log("Submitting login request:", { email, password });
-  
-   try {
-     const response = await fetch('http://localhost:5000/login', {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify({ email, password }),
-     });
-      const data = await response.json();
-     console.log("Response received:", data);
-     if (response.ok) {
-       navigate('/home');  // Redirect on successful login
-     } else {
-       setErrorMessage(data.error || 'An error occurred');
-     }
-   } catch (error) {
-     setErrorMessage('An error occurred while logging in');
-   }
- };
+  e.preventDefault();
+  console.log("Submitting login request:", { email, password });
+
+  try {
+    const response = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    console.log("Response received:", data);
+
+    if (response.ok) {
+      navigate('/home');  // Redirect on successful login
+    } else if (response.status === 401) {
+      setErrorMessage('Incorrect password');
+    } else if (response.status === 404) {
+      setErrorMessage('User not found');
+    } else {
+      setErrorMessage(data.error || 'An error occurred during login');
+    }
+  } catch (error) {
+    setErrorMessage('An error occurred while logging in');
+  }
+};
 
 
 return (
