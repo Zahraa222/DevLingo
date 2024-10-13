@@ -57,6 +57,7 @@ function Chapter_side() {
                   <div key={sectionIndex} className="mb-4">
                     <h4 className="font-bold mb-2">{section.title}</h4>
                     <p>{section.content}</p>
+                    <code className="bg-gray-200">{section.code}</code>
                   </div>
               ))}
             </div>
