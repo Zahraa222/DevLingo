@@ -7,6 +7,50 @@ export default function GetHelp() {
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isListening, setIsListening] = useState(false);
+
+  // Web Speech API integration
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+
+  const handleVoiceInput = () => {
+    if (recognition) {
+      setError(""); // Clear any previous errors
+      setIsListening(true); // Set listening state
+      recognition.start(); // Start listening
+  
+      recognition.onstart = () => {
+        console.log("Speech recognition started.");
+      };
+  
+      recognition.onspeechend = () => {
+        console.log("Speech has stopped being detected.");
+        recognition.stop(); // Stop recognition when speech ends
+      };
+  
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        setQuestion(transcript); // Set the question field with the recognized speech
+        setIsListening(false); // Stop listening
+        console.log(`Recognized speech: ${transcript}`);
+      };
+  
+      recognition.onerror = (event) => {
+        console.error("Speech recognition error: ", event.error);
+        setError(`Speech recognition failed due to: ${event.error}`);
+        setIsListening(false);
+      };
+  
+      recognition.onend = () => {
+        console.log("Speech recognition service disconnected.");
+        setIsListening(false); // Reset listening state
+      };
+    } else {
+      setError("Speech recognition is not supported in this browser.");
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +67,6 @@ export default function GetHelp() {
     try {
       // Use Flask's API endpoint (running on port 5000)
       const response = await fetch("http://localhost:5000/gethelp", {
-        // Correct Flask endpoint
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,11 +97,20 @@ export default function GetHelp() {
           <textarea
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            placeholder="Type your question here..."
+            placeholder="Type or speak your question here..."
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             rows={4}
             required
           ></textarea>
+
+          <button
+            type="button"
+            onClick={handleVoiceInput}
+            className={`w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-200 ${isListening ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isListening}
+          >
+            {isListening ? "Listening..." : "Speak Your Question"}
+          </button>
 
           <button
             type="submit"

@@ -102,10 +102,8 @@ def ask_question():
         print("Tried to go to page post")
         question = request.json.get("question")
         if not question:
-            return jsonify({"answer": "Please provide a question."}), 400
-        
+            return jsonify({"answear": "Please provide a question."}), 400
         result = asyncio.run(agent.respond_to_question(question))
-
         if "answer" in result:
             return jsonify({"answer": result["answer"]})
         else:
@@ -133,7 +131,6 @@ def get_user_details():
     email = session.get('user_email')
     if not email:
         return jsonify({"error": "User is not logged in"}), 403
-
     xp = fetch_xp(email)  
     level = fetch_level(email)
     return jsonify({"XP": xp, "Level": level}), 200
