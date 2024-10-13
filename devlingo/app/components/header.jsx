@@ -4,7 +4,7 @@ import logo from "../images/devlingologo.png";
 
 function Header() {
   return (
-    <div className="relative flex justify-start items-center p-4 w-full">
+    <div className="relative flex justify-start items-center pr-4 pl-4 w-full">
       <Image
         src={logo}
         alt="Dev Lingo Logo"
