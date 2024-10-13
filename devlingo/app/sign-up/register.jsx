@@ -43,7 +43,7 @@ export default function Register() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-500">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#ef4035]">
       <div className="flex p-6">
         <Image
           src={logo}
@@ -55,7 +55,7 @@ export default function Register() {
         <h1 className="mt-6 text-6xl">DevLingo</h1>
       </div>
       <div className="absolute top-4 left-4">
-        <Link to="/" className="text-blue-500 hover:underline">
+        <Link to="/" className="text-slate-50 hover:underline">
           Back to Login
         </Link>
       </div>
@@ -117,7 +117,7 @@ export default function Register() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+          className="w-full bg-[#faaf3f] text-white py-2 rounded-md hover:bg-[#e09c38] transition duration-200"
         >
           Register
         </button>
