@@ -1,3 +1,4 @@
+// Chapter data for the Python course. Content generated wirh GPT-4.
 export const chapters = [
     {
         "title": "Chapter 1: The Fundamentals",
