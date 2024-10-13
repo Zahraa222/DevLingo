@@ -1,7 +1,9 @@
-from flask import Flask, request, jsonify, render_template, redirect, url_for, flash, send_from_directory
+from flask import Flask, request, jsonify, session, render_template, redirect, url_for, flash, send_from_directory
 from flask_cors import CORS, cross_origin
 import dbase as dbase
+from dbase import *
 import cred as cred
+from cred import *
 import os
 import google.generativeai as genai
 import uagents
@@ -13,17 +15,17 @@ model = genai.GenerativeModel(model_name="gemini-1.5-flash", system_instruction=
 
 app = Flask(__name__)
 app.secret_key = 'devlingo123456789'
-# CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 cors=CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+
 
 @app.route('/')
 def index():
     try:
-        return send_from_directory(os.path.join('app', 'signup'), 'login.js')
+        return send_from_directory(os.path.join('app', 'sign-up'), 'login.js')
     except Exception as e:
         print(e)
-        return jsonify({"message": f"Error: {e}"}), 404
+        return send_from_directory(os.path.join('app', 'sign-up'), 'notfound.js')
 
 
 @app.route('/home')
@@ -34,7 +36,7 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'GET':
-        return send_from_directory(os.path.join('app', 'signup'), 'register.js')
+        return send_from_directory(os.path.join('app', 'sign-up'), 'register.js')
     elif request.method == 'POST':
         data = request.get_json()
         email = data.get('email')
@@ -45,6 +47,7 @@ def register_user():
             if dbase.check_user(email):
                 return jsonify({"error": "User already exists. Please log in."}), 400
             dbase.create_user(email, password)
+            session['user_email'] = email
             return redirect(url_for('home'))
         except Exception as e:
             return jsonify({"error": str(e)}), 500
@@ -52,28 +55,27 @@ def register_user():
 
 @app.route('/login', methods=['POST'])
 def login_user():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        return send_from_directory(os.path.join('app', 'signup'), 'login.js')
+    elif request.method == 'POST':
         print("Received post request")
         data = request.get_json()
         print(f"Data received: {data}")
         email = data.get('email')
         password = data.get('password')
         print(f"Received login request: {email}, {password}")  # Log the request
-
         if not email or not password:
             print("Missing email or password")
             return jsonify({"error": "Missing data"}), 400  # Bad request
-
         try:
             result = dbase.check_credentials(email, password)
             print(f"Login result: {result}")
-
             if result == "Incorrect password":
                 return jsonify({"error": "Incorrect password. Please try again."}), 401  # Unauthorized
             elif result == "User not found":
-                return jsonify({"error": "User not found. Please register."}), 404  # Not found
-            elif result:  # Successful login
-                return jsonify({"message": "Login successful"}), 200  # Success
+                return jsonify({"error": "User not found. Please register."}), 400
+            elif result:
+                return jsonify({"message": "Login successful"}), 200
         except Exception as e:
             print(f"Error during login: {e}")
             return jsonify({"error": str(e)}), 500 
@@ -95,7 +97,7 @@ agent = CodingBotAgent(name="coding_bot")
 def ask_question():
     if request.method == 'GET':
         print("Tried to go to page get")
-        return send_from_directory(os.path.join('app', 'signup'), 'gethelp.js')
+        return send_from_directory(os.path.join('app', 'sign-up'), 'gethelp.js')
     elif request.method == 'POST':
         print("Tried to go to page post")
         question = request.json.get("question")
@@ -109,6 +111,32 @@ def ask_question():
         else:
             return jsonify({"answer": "Something went wrong, please try again."}), 500
 
+
+@app.route('/python', methods=['GET', 'POST'])
+def start_python():
+    return jsonify({"message": "Handled by React"}), 200
+    # email = session.get('user_email')
+    # if not email:
+    #     return jsonify({"error": "User is not logged in"}), 403
+    # xp = fetch_xp(email)
+    # print(f"{email}'s xp is {xp}")
+    # if request.method == "GET":
+    #     print("Starting python...")
+    #     return send_from_directory(os.path.join('app', 'languages'), 'python.js')
+    # elif request.method == "POST":
+    #     print("Starting python post...")
+    #     return send_from_directory(os.path.join('app', 'languages'), 'python.js')
+
+
+@app.route('/api/user/details', methods=['GET'])
+def get_user_details():
+    email = session.get('user_email')
+    if not email:
+        return jsonify({"error": "User is not logged in"}), 403
+
+    xp = fetch_xp(email)  
+    level = fetch_level(email)
+    return jsonify({"XP": xp, "Level": level}), 200
 
 
 if __name__ == '__main__':
