@@ -52,7 +52,7 @@ export default function Register() {
           width={100}
           height={100}
         />
-        <h1 className="mt-6 text-6xl">DevLingo</h1>
+        <h1 className="mt-6 text-6xl text-[#262261]">DevLingo</h1>
       </div>
       <div className="absolute top-4 left-4">
         <Link to="/" className="text-slate-50 hover:underline">
