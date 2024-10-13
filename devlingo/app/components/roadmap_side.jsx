@@ -9,7 +9,7 @@ import QuizCard from "./quiz";
 const QuizCircle = ({ imageUrl, isSelected, isLocked, onClick }) => {
   return (
     <div
-      className={`flex items-center justify-center w-40 h-40 rounded-full cursor-pointer ${
+      className={`flex items-center justify-center w-40 h-40 rounded-full cursor-pointer z-10 ${
         isSelected ? "bg-green-500" : "bg-slate-100"
       }`}
       onClick={onClick}
