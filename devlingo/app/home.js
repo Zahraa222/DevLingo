@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center min-h-screen p-8 bg-blue-500">
+    <div className="flex flex-col items-center min-h-screen pb-4 pl-4 pr-4 bg-blue-500">
       <Header />
       <h2 className="text-2xl font-bold mb-4 text-white">
         Pick a Language To Study:
